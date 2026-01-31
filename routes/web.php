@@ -29,3 +29,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('/init-db', function () {
+    try {
+        Artisan::call('migrate:fresh --seed --force');
+        return "✅ دیتابیس با موفقیت ساخته و آماده شد!";
+    } catch (\Exception $e) {
+        return "❌ خطا: " . $e->getMessage();
+    }
+});
